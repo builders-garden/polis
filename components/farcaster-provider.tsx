@@ -1,17 +1,8 @@
 "use client";
 
-import {
-  FrameContext,
-  SafeAreaInsets,
-} from "@farcaster/frame-core/dist/context";
+import { FrameContext } from "@farcaster/frame-core/dist/context";
 import sdk from "@farcaster/frame-sdk";
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  ReactNode,
-} from "react";
+import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
 interface FrameContextValue {
   context: FrameContext | null;
@@ -19,9 +10,7 @@ interface FrameContextValue {
   error: string | null;
 }
 
-const FrameProviderContext = createContext<FrameContextValue | undefined>(
-  undefined
-);
+const FrameProviderContext = createContext<FrameContextValue | undefined>(undefined);
 
 export function useFrame() {
   const context = useContext(FrameProviderContext);
@@ -51,9 +40,7 @@ export function FrameProvider({ children }: FrameProviderProps) {
         }
         await sdk.actions.ready();
       } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "Failed to initialize SDK"
-        );
+        setError(err instanceof Error ? err.message : "Failed to initialize SDK");
         console.error("SDK initialization error:", err);
       }
     };
@@ -72,9 +59,5 @@ export function FrameProvider({ children }: FrameProviderProps) {
     error,
   };
 
-  return (
-    <FrameProviderContext.Provider value={value}>
-      {children}
-    </FrameProviderContext.Provider>
-  );
+  return <FrameProviderContext.Provider value={value}>{children}</FrameProviderContext.Provider>;
 }
