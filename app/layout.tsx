@@ -17,20 +17,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const ErudaProvider = dynamic(
-    () => import("../components/Eruda").then((c) => c.ErudaProvider),
-    {
-      ssr: false,
-    }
-  );
+  const ErudaProvider = dynamic(() => import("../components/Eruda").then((c) => c.ErudaProvider), {
+    ssr: false,
+  });
   return (
     <html lang="en">
       <body className={inter.className}>
-          <ErudaProvider>
-            <FrameProvider>
-              <MiniKitProvider>{children}</MiniKitProvider>
-            </FrameProvider>
-          </ErudaProvider>
+        <ErudaProvider>
+          <FrameProvider>
+            <MiniKitProvider>{children}</MiniKitProvider>
+          </FrameProvider>
+        </ErudaProvider>
       </body>
     </html>
   );

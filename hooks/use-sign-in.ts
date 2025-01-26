@@ -20,9 +20,7 @@ export const useSignIn = () => {
       }
 
       if (contextType === ContextType.Farcaster && !context.user?.fid) {
-        throw new Error(
-          "No FID found. Please make sure you're logged into Warpcast."
-        );
+        throw new Error("No FID found. Please make sure you're logged into Warpcast.");
       }
       let referrerFid: number | null = null;
       let result: { message: string; signature: string; address?: string };
@@ -44,14 +42,9 @@ export const useSignIn = () => {
         result = await sdk.actions.signIn({
           nonce: Math.random().toString(36).substring(2),
           notBefore: new Date().toISOString(),
-          expirationTime: new Date(
-            Date.now() + MESSAGE_EXPIRATION_TIME
-          ).toISOString(),
+          expirationTime: new Date(Date.now() + MESSAGE_EXPIRATION_TIME).toISOString(),
         });
-        referrerFid =
-          context.location?.type === "cast_embed"
-            ? context.location.cast.fid
-            : null;
+        referrerFid = context.location?.type === "cast_embed" ? context.location.cast.fid : null;
       }
 
       const res = await fetch("/api/auth/sign-in", {
@@ -82,8 +75,7 @@ export const useSignIn = () => {
       // posthog.identify(context.user.fid.toString());
       return data;
     } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : "Sign in failed";
+      const errorMessage = err instanceof Error ? err.message : "Sign in failed";
       setError(errorMessage);
       throw err;
     } finally {
