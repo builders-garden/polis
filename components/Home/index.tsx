@@ -4,7 +4,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
-import { IsometricContainer, Isometric, IsometricCube } from "isometric-react";
+import Scene from "../game/Scene";
 
 const resources = [
   { name: "Wood", icon: "/assets/log1.png", amount: 1234, max: 8000 },
@@ -46,15 +46,7 @@ export default function Home() {
         </div>
       </nav>
 
-      <div
-        className="relative h-[100px] w-[150px]"
-        style={{
-          clipPath: "polygon(50% 0, 100% 50%, 50% 100%, 0 50%)",
-          background: "#88A65E",
-        }}
-      >
-        <img src="edifices/2.png" alt="Edifice" className="absolute w-[150px] inset-0 z-10" />
-      </div>
+      <Scene />
 
       <footer className="fixed bottom-0 left-0 right-0 flex justify-center items-center w-full bg-brown-900/80 backdrop-blur-sm py-2 px-6 z-10">
         <div className="flex w-full justify-between space-x-4">
