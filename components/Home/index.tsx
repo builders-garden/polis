@@ -4,13 +4,12 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
-import Scene from "../game/Scene";
 
 const resources = [
-  { name: "Wood", icon: "/assets/log1.png", amount: 1234, max: 8000 },
-  { name: "Brick", icon: "/assets/brick1.png", amount: 1234, max: 8000 },
-  { name: "Stone", icon: "/assets/rock1.png", amount: 1234, max: 8000 },
-  { name: "Wheat", icon: "/assets/wheat1.png", amount: 1234, max: 8000 },
+  { name: "Wood", icon: "/assets/resources/log1.png", amount: 1234, max: 8000 },
+  { name: "Brick", icon: "/assets/resources/brick1.png", amount: 1234, max: 8000 },
+  { name: "Stone", icon: "/assets/resources/rock1.png", amount: 1234, max: 8000 },
+  { name: "Wheat", icon: "/assets/resources/wheat2.png", amount: 1234, max: 8000 },
 ];
 
 const footerButtons = [
@@ -21,44 +20,74 @@ const footerButtons = [
   { name: "Settings", icon: "⚙️" },
 ];
 
+const overlayPoints = [
+  { id: 1, value: 12, position: { top: "58%", left: "24%" } },
+  { id: 2, value: 8, position: { top: "33%", left: "85%" } },
+  { id: 3, value: 15, position: { top: "67%", left: "62%" } },
+];
+
 export default function Home() {
   const [openDrawer, setOpenDrawer] = useState<string | null>(null);
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-center bg-gradient-to-b from-blue-200 to-green-200 p-4 pt-20">
-      <nav className="fixed top-0 left-0 right-0 flex justify-center items-center w-full bg-brown-900/80 backdrop-blur-sm h-16 p-2 z-10">
-        <div className="flex gap-1">
+    <div
+      className="flex relative min-h-screen w-full items-center justify-center"
+      style={{
+        backgroundImage: "url('/assets/village/village6.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <nav className="fixed top-0 left-0 right-0 flex justify-center items-center w-full bg-brown-900/80 backdrop-blur-sm h-14 p-2 z-10">
+        <div className="flex justify-between items-center w-full">
           {resources.map((resource, index) => (
             <motion.div
               key={resource.name}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="flex items-center bg-white rounded-lg p-1 px-2 gap-1 shadow-lg"
+              className="flex justify-center items-center gap-0.5"
             >
-              <img className="w-6" src={resource.icon || "/placeholder.svg"} alt={resource.name} />
+              <img className="w-5" src={resource.icon || "/placeholder.svg"} alt={resource.name} />
               <div className="text-white">
-                <span className="font-bold text-black text-sm">{resource.amount}</span>
-                <span className="text-[9px] text-gray-600">/{resource.max}</span>
+                <span className="font-bold text-white text-[13px]">{resource.amount}</span>
+                <span className="text-[9px] text-white">/{resource.max}</span>
               </div>
             </motion.div>
           ))}
         </div>
       </nav>
 
-      <Scene />
+      {overlayPoints.map((point) => (
+        <div
+          key={point.id}
+          className="absolute bg-white shadow-lg border-2 border-black rounded-full px-1.5 py-1
+          transform -translate-x-1/2 -translate-y-1/2 text-xs cursor-pointer
+          hover:scale-110 transition-transform"
+          style={{
+            top: point.position.top,
+            left: point.position.left,
+          }}
+        >
+          {point.value}
+        </div>
+      ))}
+
+      <audio autoPlay loop>
+        <source src="/assets/music/adventure-music.mp3" type="audio/mp3" />
+      </audio>
 
       <footer className="fixed bottom-0 left-0 right-0 flex justify-center items-center w-full bg-brown-900/80 backdrop-blur-sm py-2 px-6 z-10">
         <div className="flex w-full justify-between space-x-4">
-          {footerButtons.map((button, index) => (
+          {footerButtons.map((button) => (
             <motion.button
               key={button.name}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={() => setOpenDrawer(button.name)}
-              className="bg-brown-700 hover:bg-brown-600 text-white rounded-full p-3 shadow-lg focus:outline-none"
+              className="bg-brown-700 hover:bg-brown-600 text-white rounded-full p-2 shadow-lg focus:outline-none"
             >
-              <span className="text-2xl">{button.icon}</span>
+              <span className="text-xl">{button.icon}</span>
             </motion.button>
           ))}
         </div>
